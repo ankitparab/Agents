@@ -1,0 +1,3 @@
+[submodule ".agents/plugins/agent-skills"]
+	path = .agents/plugins/agent-skills
+	url = https://github.com/addyosmani/agent-skills.git
