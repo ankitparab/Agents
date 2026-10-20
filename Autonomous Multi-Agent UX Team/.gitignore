@@ -1,0 +1,6 @@
+.env
+.DS_Store
+coverage/
+node_modules/
+ux_audit.json
+src/variants/

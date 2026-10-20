@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Rules-first UX critique from Figma JSON." />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Design Critique Copilot</title>
+  </head>
+  <body>
+    <header><div><p class="eyebrow">Rules-first UX review</p><h1>Design Critique Copilot</h1></div><span class="badge">Configure LLM keys in <code>.env</code> to run multi-agent review</span></header>
+    <main>
+      <section class="panel intake">
+        <div><h2>Analyze a Figma node tree</h2><p>Paste Figma JSON or load the built-in checkout fixture. Analysis is deterministic and stays on this machine.</p></div>
+        <label for="context">Task context <span>optional</span></label>
+        <input id="context" maxlength="500" placeholder="e.g. A returning customer completes a mobile checkout" />
+        <label for="figma-json">Figma JSON</label>
+        <textarea id="figma-json" spellcheck="false" aria-describedby="json-help"></textarea>
+        <label for="figma-file">Or upload a <code>.json</code> file</label>
+        <input id="figma-file" type="file" accept="application/json,.json" />
+        <p id="json-help" class="hint">Use a Figma document, a selected frame, or any node with <code>children</code> and <code>absoluteBoundingBox</code>.</p>
+        <label class="llm-toggle"><input id="run-llm" type="checkbox" /><span><strong>Run the three-agent LLM pipeline</strong><br />Supervisor → UX audit → React/Tailwind variants. Requires backend `.env` configuration.</span></label>
+        <div class="actions"><button id="fixture" class="secondary">Load checkout fixture</button><button id="analyze">Run critique</button></div>
+        <p id="error" role="alert"></p>
+      </section>
+
+      <section id="results" hidden>
+        <section class="summary"><article><p>UX risk score</p><strong id="risk-score">0</strong><span>/100</span></article><article><p>Findings</p><strong id="finding-count">0</strong><span>traceable issues</span></article><article><p>Analysis mode</p><strong id="mode">Rules</strong><span>no LLM request</span></article></section>
+        <section class="panel"><h2>Assumptions</h2><ul id="assumptions"></ul></section>
+        <section class="panel"><div class="section-heading"><div><h2>Annotated findings</h2><p>Measured findings are direct checks; likely findings require human context.</p></div><select id="filter"><option value="all">All severities</option><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></div><div id="findings" class="findings"></div></section>
+        <section class="panel"><div class="section-heading"><div><h2>Interactive alternatives</h2><p>Rules mode shows a safe local prototype. LLM mode returns validated React/Tailwind source for review and export.</p></div><div class="tabs"><button data-variant="minimalFriction" class="active">A · Minimal friction</button><button data-variant="behavioral">B · Behavioral nudge</button></div></div><iframe id="sandbox" title="Generated prototype sandbox" sandbox="allow-forms allow-scripts"></iframe><pre id="variant-code" hidden></pre></section>
+      </section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

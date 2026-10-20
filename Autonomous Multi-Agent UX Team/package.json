@@ -1,0 +1,15 @@
+{
+  "name": "design-critique-copilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "pipeline": "node run-pipeline.js",
+    "test": "node --test",
+    "check": "node --check server.js && node --check run-pipeline.js && node --check src/env.js && node --check src/evaluator.js && node --check src/llm.js && node --check src/pipeline.js && node --check src/prototype.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

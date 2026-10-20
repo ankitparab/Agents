@@ -1,0 +1,23 @@
+{
+  "id": "checkout-frame",
+  "name": "Checkout",
+  "type": "FRAME",
+  "absoluteBoundingBox": { "x": 0, "y": 0, "width": 390, "height": 844 },
+  "children": [
+    { "id": "title", "name": "Checkout heading", "type": "TEXT", "characters": "Complete your purchase", "absoluteBoundingBox": { "x": 24, "y": 32, "width": 280, "height": 32 } },
+    { "id": "intro", "name": "Long checkout instructions", "type": "TEXT", "characters": "Please carefully review the following information before continuing. We need these details to process your order and will use them according to our policy. Make sure every field is correct before proceeding to the next step, because changing details later may take extra time and require support assistance.", "absoluteBoundingBox": { "x": 24, "y": 82, "width": 330, "height": 150 } },
+    { "id": "email-label", "name": "Email label", "type": "TEXT", "characters": "Email address", "absoluteBoundingBox": { "x": 24, "y": 260, "width": 92, "height": 18 } },
+    { "id": "email-input", "name": "Email input field", "type": "RECTANGLE", "absoluteBoundingBox": { "x": 24, "y": 298, "width": 342, "height": 44 } },
+    { "id": "choice-group", "name": "Payment options", "type": "FRAME", "absoluteBoundingBox": { "x": 24, "y": 380, "width": 342, "height": 156 }, "children": [
+      { "id": "card", "name": "Card button", "type": "INSTANCE", "absoluteBoundingBox": { "x": 24, "y": 380, "width": 64, "height": 32 }, "fills": [{ "color": "white" }] },
+      { "id": "paypal", "name": "PayPal button", "type": "INSTANCE", "absoluteBoundingBox": { "x": 94, "y": 380, "width": 64, "height": 32 }, "fills": [{ "color": "white" }] },
+      { "id": "klarna", "name": "Klarna button", "type": "INSTANCE", "absoluteBoundingBox": { "x": 164, "y": 380, "width": 64, "height": 32 }, "fills": [{ "color": "white" }] },
+      { "id": "applepay", "name": "Apple Pay button", "type": "INSTANCE", "absoluteBoundingBox": { "x": 234, "y": 380, "width": 64, "height": 32 }, "fills": [{ "color": "white" }] },
+      { "id": "bank", "name": "Bank transfer button", "type": "INSTANCE", "absoluteBoundingBox": { "x": 304, "y": 380, "width": 64, "height": 32 }, "fills": [{ "color": "white" }] }
+    ] },
+    { "id": "actions", "name": "Checkout actions", "type": "FRAME", "absoluteBoundingBox": { "x": 24, "y": 620, "width": 342, "height": 36 }, "children": [
+      { "id": "continue", "name": "Continue primary button", "type": "INSTANCE", "absoluteBoundingBox": { "x": 24, "y": 620, "width": 160, "height": 36 }, "fills": [{ "color": "blue" }] },
+      { "id": "cancel", "name": "Cancel button", "type": "INSTANCE", "absoluteBoundingBox": { "x": 206, "y": 620, "width": 160, "height": 36 }, "fills": [{ "color": "blue" }] }
+    ] }
+  ]
+}
