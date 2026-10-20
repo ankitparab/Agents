@@ -27,7 +27,7 @@ Findings are labelled **measured** when they come directly from node data and **
 ## Run locally
 
 ```sh
-cd "Autonomous Multi-Agent UX Team"
+cd "Autonomous multi-agent UX team"
 npm start
 ```
 
