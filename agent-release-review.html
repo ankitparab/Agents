@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Release Review</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f5f1;color:#142321;font:16px/1.55 system-ui,sans-serif}main{max-width:960px;margin:auto;padding:56px 22px}h1{font-size:clamp(2.5rem,7vw,4.75rem);line-height:1;letter-spacing:-.06em;margin:0}main>p{max-width:60ch}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px;margin:32px 0}article{background:#fff;border:1px solid #ced7d1;border-radius:16px;padding:24px}h2{margin-top:0}label{display:block;margin:.55rem 0;cursor:pointer}input{accent-color:#166456}output{display:block;border-top:1px solid #ced7d1;margin-top:20px;padding-top:16px}.score{font-size:2.5rem;font-weight:750;line-height:1.1}.decision{font-weight:700}.hold{color:#963e30}.pilot{color:#166456}footer{color:#43544e}
+</style>
+<main>
+<h1>Would you ship it?</h1>
+<p>Compare two simulated versions of a Stockholm apartment-alert agent. Change either failure and see how it affects the release decision.</p>
+<div class="grid">
+<article id="a"><h2>Version A</h2><label><input type="checkbox" checked> Misses a qualifying home</label><label><input type="checkbox"> Sends a repeat alert</label><output aria-live="polite"></output></article>
+<article id="b"><h2>Version B</h2><label><input type="checkbox"> Misses a qualifying home</label><label><input type="checkbox" checked> Sends a repeat alert</label><output aria-live="polite"></output></article>
+</div>
+<footer>Example policy: a pilot requires at least 19 of 20 tests to pass and zero missed qualifying homes in this test suite. The demo uses synthetic cases and simulated alerts.</footer>
+</main>
+<script>
+const cases = [
+  ...Array.from({length: 18}, (_, i) => ({
+    name: 'Standard listing ' + (i + 1), expected: i % 2
+  })),
+  {name: 'Qualifying home', expected: 1, critical: true,
+   fix: 'Fix the filter that drops qualifying homes. Add a regression test that expects exactly one alert.'},
+  {name: 'Previously alerted home', expected: 0,
+   fix: 'Fix deduplication across runs. Add a regression test that expects zero repeat alerts.'}
+];
+function review(outputs) {
+  const failures = cases.filter((test, index) => outputs[index] !== test.expected);
+  const score = (cases.length - failures.length) / cases.length * 100;
+  const hold = score < 95 || failures.some(test => test.critical);
+  return { score, decision: hold ? 'Hold release' : 'Pilot', failures };
+}
+function simulate(missed, duplicate) {
+  const outputs = cases.map(test => test.expected);
+  outputs[18] = missed ? 0 : 1;
+  outputs[19] = duplicate ? 1 : 0;
+  return review(outputs);
+}
+for (const card of document.querySelectorAll('article')) {
+  const [missed, duplicate] = card.querySelectorAll('input');
+  const output = card.querySelector('output');
+  const update = () => {
+    const result = simulate(missed.checked, duplicate.checked);
+    const priority = result.failures.map(test =>
+      '<li><strong>' + (test.critical ? 'Before release' : 'Backlog') + '</strong> · ' + test.fix + '</li>'
+    ).join('');
+    const status = result.decision === 'Pilot' ? 'pilot' : 'hold';
+    output.innerHTML = '<div class="score">' + result.score + '%</div>' +
+      '<div class="decision ' + status + '">' + result.decision + '</div>' +
+      (priority ? '<ul>' + priority + '</ul>' : '<p>All example tests passed.</p>');
+  };
+  card.addEventListener('change', update);
+  update();
+}
+</script>
+</html>
